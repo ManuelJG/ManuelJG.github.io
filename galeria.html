@@ -5,8 +5,10 @@
   <title>Galería | Manuel Jiménez</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
 
+  <!-- Tipografías -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
@@ -17,6 +19,7 @@
       font-family: 'Inter', sans-serif;
     }
 
+    /* Header */
     header {
       padding: 30px 40px;
     }
@@ -25,42 +28,54 @@
       color: #ccc;
       text-decoration: none;
       font-size: 13px;
+      letter-spacing: 0.5px;
     }
 
     header a:hover {
       color: white;
     }
 
+    /* Título */
     h1 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-size: 32px;
-      margin: 0 40px 20px 40px;
+      margin: 0 40px 30px 40px;
     }
 
+    /* Galería */
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
       padding: 0 40px 40px 40px;
     }
 
-    .gallery img {
+    /* Contenedor con ratio fijo */
+    .gallery-item {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      cursor: pointer;
       transition: 0.4s;
+      cursor: pointer;
     }
 
-    .gallery img:hover {
+    .gallery-item img:hover {
       opacity: 0.85;
     }
 
+    /* Mobile */
     @media (max-width: 600px) {
-      .gallery {
-        grid-template-columns: 1fr;
-        padding: 0 20px 20px 20px;
+      header {
+        padding: 20px;
       }
 
       h1 {
@@ -68,8 +83,9 @@
         margin: 0 20px 20px 20px;
       }
 
-      header {
-        padding: 20px;
+      .gallery {
+        grid-template-columns: 1fr;
+        padding: 0 20px 20px 20px;
       }
     }
   </style>
@@ -77,19 +93,22 @@
 
 <body>
 
+  <!-- Navegación -->
   <header>
     <a href="index.html">← Volver</a>
   </header>
 
+  <!-- Título -->
   <h1>Galería</h1>
 
+  <!-- Galería -->
   <div class="gallery">
-    <img src="ospreyMJG.jpg">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-    <img src="foto4.jpg">
-    <img src="foto5.jpg">
-    <img src="foto6.jpg">
+    <div class="gallery-item"><img src="ospreyMJG.jpg" alt=""></div>
+    <div class="gallery-item"><img src="foto2.jpg" alt=""></div>
+    <div class="gallery-item"><img src="foto3.jpg" alt=""></div>
+    <div class="gallery-item"><img src="foto4.jpg" alt=""></div>
+    <div class="gallery-item"><img src="foto5.jpg" alt=""></div>
+    <div class="gallery-item"><img src="foto6.jpg" alt=""></div>
   </div>
 
 </body>
