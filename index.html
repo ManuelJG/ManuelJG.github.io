@@ -5,6 +5,7 @@
   <title>Manuel Jimenez | Fotografía de naturaleza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
 
   <!-- Tipografía elegante -->
@@ -25,6 +26,7 @@
       overflow: hidden;
     }
 
+    /* Imagen responsive */
     .hero img {
       width: 100%;
       height: 100%;
@@ -48,7 +50,7 @@
       max-width: 420px;
     }
 
-    /* Nombre (más editorial) */
+    /* Nombre */
     .hero-text h2 {
       margin: 0 0 8px 0;
       font-family: 'Inter', sans-serif;
@@ -59,7 +61,7 @@
       color: #bbbbbb;
     }
 
-    /* Título principal (fine art) */
+    /* Título */
     .hero-text h1 {
       margin: 0;
       font-family: 'Playfair Display', serif;
@@ -93,10 +95,8 @@
       color: white;
     }
 
+    /* MOBILE */
     @media (max-width: 600px) {
-      #hero-img {
-    content: url("ospreyMJG-mobile.jpg");
-      }
       .hero-text {
         left: 25px;
         bottom: 12%;
@@ -109,6 +109,10 @@
       .hero-text h2 {
         font-size: 11px;
       }
+
+      .hero-text p {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -116,7 +120,12 @@
 <body>
 
   <div class="hero">
-    <img src="ospreyMJG.jpg" alt="Fotografía">
+
+    <!-- Imagen responsive -->
+    <picture>
+      <source srcset="ospreyMJG-mobile.jpg" media="(max-width: 600px)">
+      <img src="ospreyMJG.jpg" alt="Fotografía">
+    </picture>
 
     <div class="overlay"></div>
 
