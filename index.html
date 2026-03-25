@@ -5,12 +5,15 @@
   <title>Manuel Jimenez | Fotografía de naturaleza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Tipografía elegante -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background-color: black;
       color: white;
+      font-family: 'Inter', sans-serif;
     }
 
     .hero {
@@ -26,82 +29,80 @@
       object-fit: cover;
     }
 
-    /* Overlay oscuro ligero */
+    /* Overlay MUY sutil */
     .overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.1),
-        rgba(0,0,0,0.1)
-      );
+      background: rgba(0,0,0,0.08);
     }
 
-    /* Texto principal */
     .hero-text {
       position: absolute;
-      bottom: 60px;
-      left: 40px;
-      max-width: 400px;
+      bottom: 70px;
+      left: 50px;
+      max-width: 420px;
     }
 
+    /* Nombre (más editorial) */
+    .hero-text h2 {
+      margin: 0 0 8px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #bbbbbb;
+    }
+
+    /* Título principal (fine art) */
     .hero-text h1 {
       margin: 0;
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: 1px;
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
     }
 
     .hero-text p {
-      margin-top: 10px;
+      margin-top: 14px;
       font-size: 14px;
-      color: #ccc;
+      color: #cccccc;
+      font-weight: 300;
     }
 
-    /* Links */
     .links {
-      margin-top: 15px;
+      margin-top: 18px;
       font-size: 13px;
+      letter-spacing: 0.5px;
     }
 
     .links a {
-      color: #ccc;
+      color: #cccccc;
       text-decoration: none;
-      margin-right: 12px;
+      margin-right: 14px;
+      transition: 0.3s;
     }
 
     .links a:hover {
       color: white;
     }
 
-    /* Firma */
-    .firma {
-      position: absolute;
-      bottom: 20px;
-      right: 30px;
-      opacity: 0.8;
-    }
-
-    .firma img {
-      height: 40px;
-    }
-
-    /* Responsive */
     @media (max-width: 600px) {
       .hero-text {
-        left: 20px;
-        bottom: 40px;
+        left: 25px;
+        bottom: 50px;
       }
 
       .hero-text h1 {
-        font-size: 22px;
+        font-size: 26px;
       }
 
-      .firma img {
-        height: 30px;
+      .hero-text h2 {
+        font-size: 11px;
       }
     }
   </style>
@@ -121,9 +122,8 @@
 
       <div class="links">
         <a href="https://instagram.com/manueljigas" target="_blank">Instagram</a>
-       <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
+        <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
         <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
-
       </div>
     </div>
 
