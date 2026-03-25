@@ -5,10 +5,8 @@
   <title>Galería | Manuel Jiménez</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
 
-  <!-- Tipografías -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
@@ -19,7 +17,6 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Header */
     header {
       padding: 30px 40px;
     }
@@ -28,14 +25,12 @@
       color: #ccc;
       text-decoration: none;
       font-size: 13px;
-      letter-spacing: 0.5px;
     }
 
     header a:hover {
       color: white;
     }
 
-    /* Título */
     h1 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
@@ -43,7 +38,6 @@
       margin: 0 40px 30px 40px;
     }
 
-    /* Galería */
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -51,10 +45,8 @@
       padding: 0 40px 40px 40px;
     }
 
-    /* Contenedor con ratio fijo */
     .gallery-item {
       position: relative;
-      width: 100%;
       aspect-ratio: 3 / 2;
       overflow: hidden;
     }
@@ -64,18 +56,42 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: 0.4s;
       cursor: pointer;
+      transition: 0.3s;
     }
 
     .gallery-item img:hover {
       opacity: 0.85;
     }
 
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
     /* Mobile */
     @media (max-width: 600px) {
-      header {
-        padding: 20px;
+      .gallery {
+        grid-template-columns: 1fr;
+        padding: 0 20px 20px 20px;
       }
 
       h1 {
@@ -83,9 +99,8 @@
         margin: 0 20px 20px 20px;
       }
 
-      .gallery {
-        grid-template-columns: 1fr;
-        padding: 0 20px 20px 20px;
+      header {
+        padding: 20px;
       }
     }
   </style>
@@ -93,23 +108,38 @@
 
 <body>
 
-  <!-- Navegación -->
   <header>
     <a href="index.html">← Volver</a>
   </header>
 
-  <!-- Título -->
   <h1>Galería</h1>
 
-  <!-- Galería -->
   <div class="gallery">
-    <div class="gallery-item"><img src="ospreyMJG-mobile.jpg" alt=""></div>
-    <div class="gallery-item"><img src="foto2.jpg" alt=""></div>
-    <div class="gallery-item"><img src="foto3.jpg" alt=""></div>
-    <div class="gallery-item"><img src="foto4.jpg" alt=""></div>
-    <div class="gallery-item"><img src="foto5.jpg" alt=""></div>
-    <div class="gallery-item"><img src="foto6.jpg" alt=""></div>
+    <div class="gallery-item"><img src="ospreyMJG-mobile.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="foto2.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="foto3.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="foto4.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="foto5.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="foto6.jpg" onclick="openLightbox(this.src)"></div>
   </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img">
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+  </script>
 
 </body>
 </html>
