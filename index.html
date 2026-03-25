@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Manuel Jimenez</title>
+  <title>Manuel Jimenez | Fotografía de naturaleza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -11,6 +11,7 @@
       background-color: black;
       overflow-x: hidden;
       font-family: Arial, sans-serif;
+      color: white;
     }
 
     .container {
@@ -32,47 +33,31 @@
       transition: transform 0.1s linear;
     }
 
-    /* Bloque centrado */
-    .center-block {
+    /* Texto */
+    .info {
       position: absolute;
-      left: 50%;
-      bottom: 18%;
-      transform: translateX(-50%);
-      text-align: center;
+      bottom: 40px;
+      left: 40px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
     }
 
-    /* Firma */
-    .firma img {
-      height: 80px;
-      opacity: 0.75;
-    }
-
-    /* Contacto */
-    .contacto {
-      margin-top: 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 1px;
-    }
-
-    .contacto a {
-      color: rgba(255,255,255,0.7);
+    .info a {
+      color: rgba(255,255,255,0.75);
       text-decoration: none;
-      margin: 0 6px;
+      margin-right: 10px;
     }
 
-    .contacto a:hover {
+    .info a:hover {
       color: white;
     }
 
     /* Mobile */
     @media (max-width: 600px) {
-      .firma img {
-        height: 50px;
-      }
-
-      .center-block {
-        bottom: 20%;
+      .info {
+        left: 20px;
+        bottom: 25px;
+        font-size: 12px;
       }
     }
   </style>
@@ -83,21 +68,14 @@
   <div class="container">
     <img src="foto.jpg" class="bg" id="bg">
 
-    <div class="center-block">
-      <div class="firma">
-        <img src="firma.png" alt="firma">
-      </div>
-
-      <div class="contacto">
-        <p>m@manueljg.com</p>
-        <p>
-          <a href="https://instagram.com/manueljigas" target="_blank">IG</a> ·
-          <a href="https://youtube.com/@ManuelJG" target="_blank">YT</a> ·
-          <a href="https://www.facebook.com/manuel.jgas/" target="_blank">FB</a>
-        </p>
-      </div>
+    <div class="info">
+      <p>m@manueljg.com</p>
+      <p>
+        <a href="https://instagram.com/manueljigas" target="_blank">Instagram</a>
+        <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
+        <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
+      </p>
     </div>
-
   </div>
 
   <script>
