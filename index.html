@@ -19,7 +19,7 @@
       overflow: hidden;
     }
 
-    /* Imagen con efecto parallax */
+    /* Imagen */
     .bg {
       position: absolute;
       top: -5%;
@@ -31,22 +31,27 @@
       transition: transform 0.1s linear;
     }
 
-    /* Firma */
+    /* Firma centrada */
     .firma {
       position: absolute;
-      right: 5%;
-      bottom: 12%;
-      opacity: 0.7;
+      left: 50%;
+      bottom: 18%;
+      transform: translateX(-50%);
+      opacity: 0.75;
     }
 
     .firma img {
-      height: 45px;
+      height: 80px;
     }
 
     /* Mobile */
     @media (max-width: 600px) {
       .firma img {
-        height: 30px;
+        height: 50px;
+      }
+
+      .firma {
+        bottom: 20%;
       }
     }
   </style>
@@ -55,7 +60,7 @@
 <body>
 
   <div class="container">
-    <img src="ospreyMJ.jpg" class="bg" id="bg">
+    <img src="foto.jpg" class="bg" id="bg">
 
     <div class="firma">
       <img src="firma.png" alt="firma">
@@ -67,7 +72,7 @@
 
     window.addEventListener("scroll", () => {
       let scrollY = window.scrollY;
-      bg.style.transform = "translateY(" + scrollY * 0.2 + "px)";
+      bg.style.transform = "translateY(" + scrollY * 0.15 + "px)";
     });
   </script>
 
