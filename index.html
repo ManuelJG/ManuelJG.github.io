@@ -4,64 +4,131 @@
   <meta charset="UTF-8">
   <title>Manuel Jimenez | Fotografía de naturaleza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <style>
     body {
       margin: 0;
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px 0;
       font-family: Arial, sans-serif;
+      background-color: black;
       color: white;
-      text-align: center;
     }
 
-    .container {
-      max-width: 90%;
-      padding: 20px;
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .info {
-      margin-top: 20px;
+    /* Overlay oscuro ligero */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.3),
+        rgba(0,0,0,0.6)
+      );
+    }
+
+    /* Texto principal */
+    .hero-text {
+      position: absolute;
+      bottom: 60px;
+      left: 40px;
+      max-width: 400px;
+    }
+
+    .hero-text h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .hero-text p {
+      margin-top: 10px;
       font-size: 14px;
+      color: #ccc;
     }
 
-    a {
-      color: white;
+    /* Links */
+    .links {
+      margin-top: 15px;
+      font-size: 13px;
+    }
+
+    .links a {
+      color: #ccc;
       text-decoration: none;
-      margin: 0 8px;
+      margin-right: 12px;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .links a:hover {
+      color: white;
+    }
+
+    /* Firma */
+    .firma {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      opacity: 0.8;
+    }
+
+    .firma img {
+      height: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero-text {
+        left: 20px;
+        bottom: 40px;
+      }
+
+      .hero-text h1 {
+        font-size: 22px;
+      }
+
+      .firma img {
+        height: 30px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    
-    <img src="foto.png" alt="Fotografía">
 
-    <div class="info">
-      <p>Contacto: m@manueljg.com</p>
-      
-      <p>
+  <div class="hero">
+    <img src="ospreyMJ.jpg" alt="Fotografía">
+
+    <div class="overlay"></div>
+
+    <div class="hero-text">
+      <h1>Fotografía de naturaleza</h1>
+      <p>Impresiones disponibles · Contacto: m@manueljg.com</p>
+
+      <div class="links">
         <a href="https://instagram.com/manueljigas" target="_blank">Instagram</a>
-        <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
         <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
-      </p>
+        <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
+      </div>
     </div>
 
+    <div class="firma">
+      <img src="firma.png" alt="Firma">
+    </div>
   </div>
+
 </body>
 </html>
