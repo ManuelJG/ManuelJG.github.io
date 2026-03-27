@@ -46,13 +46,11 @@
     }
 
     .gallery-item {
-      position: relative;
       aspect-ratio: 3 / 2;
       overflow: hidden;
     }
 
     .gallery-item img {
-      position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -62,30 +60,53 @@
 
     .gallery-item img:hover {
       opacity: 0.85;
+      transform: scale(1.02);
     }
 
     /* LIGHTBOX */
     .lightbox {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.95);
-      display: none;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
       z-index: 999;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: all;
     }
 
     .lightbox img {
       max-width: 90%;
       max-height: 90%;
+      transition: opacity 0.3s ease;
     }
 
-    .lightbox.active {
-      display: flex;
+    /* Flechas */
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      padding: 20px;
+      opacity: 0.6;
+      user-select: none;
     }
+
+    .nav:hover {
+      opacity: 1;
+    }
+
+    .prev { left: 20px; }
+    .next { right: 20px; }
 
     /* Mobile */
     @media (max-width: 600px) {
@@ -115,33 +136,90 @@
   <h1>Galería</h1>
 
   <div class="gallery">
-    <div class="gallery-item"><img src="ospreyMJG-mobile.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/teco1.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/colibri.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/teco2.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/trogon.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/flamingo.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/guacas.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/cent.jpg" onclick="openLightbox(this.src)"></div>
-    <div class="gallery-item"><img src="photos/deer.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="gallery-item"><img src="ospreyMJG-mobile.jpg"></div>
+    <div class="gallery-item"><img src="photos/teco1.jpg"></div>
+    <div class="gallery-item"><img src="photos/colibri.jpg"></div>
+    <div class="gallery-item"><img src="photos/teco2.jpg"></div>
+    <div class="gallery-item"><img src="photos/trogon.jpg"></div>
+    <div class="gallery-item"><img src="photos/flamingo.jpg"></div>
+    <div class="gallery-item"><img src="photos/guacas.jpg"></div>
+    <div class="gallery-item"><img src="photos/cent.jpg"></div>
+    <div class="gallery-item"><img src="photos/deer.jpg"></div>
   </div>
 
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox" id="lightbox">
+    <span class="nav prev">&#10094;</span>
     <img id="lightbox-img">
+    <span class="nav next">&#10095;</span>
   </div>
 
   <script>
-    function openLightbox(src) {
-      const lightbox = document.getElementById('lightbox');
-      const img = document.getElementById('lightbox-img');
-      img.src = src;
-      lightbox.classList.add('active');
+    const images = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    let currentIndex = 0;
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        showImage();
+        lightbox.classList.add('active');
+      });
+    });
+
+    function showImage() {
+      lightboxImg.style.opacity = 0;
+
+      setTimeout(() => {
+        lightboxImg.src = images[currentIndex].src;
+        lightboxImg.style.opacity = 1;
+      }, 150);
     }
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('active');
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
     }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    }
+
+    document.querySelector('.next').onclick = nextImage;
+    document.querySelector('.prev').onclick = prevImage;
+
+    // cerrar
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    // teclado
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'Escape') lightbox.classList.remove('active');
+    });
+
+    // swipe mobile
+    let startX = 0;
+
+    lightbox.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    lightbox.addEventListener('touchend', e => {
+      let endX = e.changedTouches[0].clientX;
+
+      if (endX - startX > 50) prevImage();
+      if (startX - endX > 50) nextImage();
+    });
   </script>
 
 </body>
