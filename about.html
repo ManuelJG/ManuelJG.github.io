@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acerca de | Manuel Jiménez</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 30px 40px;
+    }
+
+    header a {
+      color: #888;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    header a:hover {
+      color: white;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .content {
+      max-width: 600px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .contact {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .contact a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      color: white;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html">← Volver</a>
+  </header>
+
+  <div class="container">
+    <div class="content">
+      <h1>Manuel Jiménez</h1>
+
+      <p>
+        Fotógrafo de vida silvestre basado en México.
+      </p>
+
+      <p>
+        Mi trabajo busca mostrar la fauna que aún habita nuestros espacios cotidianos,
+        recordándonos que la naturaleza no está lejos — sigue aquí.
+      </p>
+
+      <div class="contact">
+        Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
