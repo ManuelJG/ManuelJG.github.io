@@ -7,6 +7,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png">
 
+  <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
@@ -48,6 +49,7 @@
       text-align: left;
     }
 
+    /* FOTO */
     .portrait {
       width: 200px;
       margin-bottom: 30px;
@@ -59,6 +61,8 @@
 
     .portrait img {
       width: 100%;
+      height: auto;
+      display: block;
       opacity: 0.95;
     }
 
@@ -75,6 +79,7 @@
 
     h1 {
       font-family: 'Playfair Display', serif;
+      font-weight: 400;
       font-size: 32px;
       margin-bottom: 30px;
     }
@@ -83,6 +88,7 @@
       font-size: 15px;
       line-height: 1.7;
       color: #ccc;
+      margin-bottom: 20px;
     }
 
     .contact {
@@ -91,9 +97,18 @@
       color: #aaa;
     }
 
-    /* MAILING */
+    .contact a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      color: white;
+    }
+
+    /* MAILING (muy sutil, sin romper diseño) */
     .mailing {
-      margin-top: 40px;
+      margin-top: 50px;
     }
 
     .mailing p {
@@ -109,10 +124,11 @@
 
     .mailing input {
       background: none;
-      border: 1px solid #555;
+      border: 1px solid #444;
       color: white;
       padding: 8px;
       font-size: 13px;
+      outline: none;
       flex: 1;
     }
 
@@ -121,6 +137,8 @@
       border: none;
       color: #ccc;
       cursor: pointer;
+      font-size: 13px;
+      transition: 0.3s;
     }
 
     .mailing button:hover {
@@ -139,6 +157,37 @@
     .success.show {
       opacity: 1;
     }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        align-items: flex-start;
+      }
+
+      .portrait {
+        width: 150px;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .mailing form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mailing button {
+        text-align: left;
+        padding-top: 5px;
+      }
+    }
   </style>
 </head>
 
@@ -151,14 +200,26 @@
   <div class="container">
     <div class="content">
 
+      <!-- FOTO -->
       <div class="portrait">
         <img src="photos/hshot.jpg" class="flip" alt="Manuel Jiménez">
       </div>
 
       <h1>Manuel Jiménez</h1>
 
-      <p>Fotógrafo de vida silvestre en México.</p>
-      <p>Observo y documento la vida que ocurre a nuestro alrededor.</p>
+      <p>
+        Fotógrafo de vida silvestre en México.
+      </p>
+
+      <p>
+        Observo y documento la vida que ocurre a nuestro alrededor,
+        muchas veces sin que la notemos.
+      </p>
+
+      <p>
+        La naturaleza no está lejos.
+        <br>Sigue aquí.
+      </p>
 
       <div class="contact">
         Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
@@ -166,7 +227,7 @@
 
       <!-- MAILING -->
       <div class="mailing">
-        <p>Fotografías, de vez en cuando.</p>
+        <p>Recibe nuevas fotografías ocasionalmente.</p>
 
         <form id="form">
           <input type="email" name="email" placeholder="Tu correo" required>
