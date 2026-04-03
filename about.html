@@ -124,19 +124,25 @@
 
     .mailing input {
       background: none;
-      border: 1px solid #444;
+      border: none;
+      border-bottom: 1px solid #444;
       color: white;
-      padding: 8px;
+      padding: 6px 2px;
       font-size: 13px;
       outline: none;
       flex: 0 0 65%
       max-width: 250px;
+      transition: border-color 0.3s ease;
+    }
+
+    .mailing input:focus {
+      border-bottom: 1px solid #aaa;
     }
 
     .mailing button {
       background: none;
       border: none;
-      color: #ccc;
+      color: #888;
       cursor: pointer;
       font-size: 13px;
       transition: 0.3s;
