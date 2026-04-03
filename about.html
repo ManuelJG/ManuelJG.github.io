@@ -66,7 +66,6 @@
       opacity: 0.95;
     }
 
-    /* CLASE PARA ESPEJEAR */
     .flip {
       transform: scaleX(-1);
     }
@@ -107,6 +106,46 @@
       color: white;
     }
 
+    /* MAILING LIST */
+    .mailing {
+      margin-top: 40px;
+    }
+
+    .mailing p {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .mailing form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mailing input {
+      background: none;
+      border: 1px solid #555;
+      color: white;
+      padding: 8px;
+      font-size: 13px;
+      outline: none;
+      flex: 1;
+    }
+
+    .mailing button {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.3s;
+    }
+
+    .mailing button:hover {
+      color: white;
+    }
+
     /* Mobile */
     @media (max-width: 600px) {
       .container {
@@ -125,6 +164,16 @@
 
       p {
         font-size: 14px;
+      }
+
+      .mailing form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mailing button {
+        text-align: left;
+        padding-top: 5px;
       }
     }
   </style>
@@ -162,6 +211,17 @@
 
       <div class="contact">
         Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
+      </div>
+
+      <!-- MAILING LIST -->
+      <div class="mailing">
+        <p>Recibe nuevas fotografías ocasionalmente.</p>
+
+        <form action="https://formspree.io/f/xvzvwqqd" method="POST">
+          <input type="email" name="email" placeholder="Tu correo" required>
+          <input type="text" name="_gotcha" style="display:none">
+          <button type="submit">Suscribirme</button>
+        </form>
       </div>
 
     </div>
