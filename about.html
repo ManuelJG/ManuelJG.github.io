@@ -118,9 +118,15 @@
       flex-wrap: wrap;
     }
 
-    .mailing-inline .label {
+    .label {
       font-size: 13px;
       color: #aaa;
+      transition: opacity 0.4s ease;
+    }
+
+    .mailing-inline input,
+    .mailing-inline button {
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     .mailing-inline input {
@@ -132,7 +138,6 @@
       font-size: 13px;
       outline: none;
       width: 160px;
-      transition: border-color 0.3s ease;
     }
 
     .mailing-inline input:focus {
@@ -149,23 +154,28 @@
       color: #888;
       cursor: pointer;
       font-size: 13px;
-      transition: 0.3s;
     }
 
     .mailing-inline button:hover {
       color: white;
     }
 
-    /* MENSAJE */
-    .success {
-      margin-top: 10px;
+    /* OCULTAR ELEMENTOS */
+    .fade-out {
+      opacity: 0;
+      transform: translateY(5px);
+      pointer-events: none;
+    }
+
+    /* TEXTO FINAL */
+    .final-message {
       font-size: 13px;
       color: #aaa;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.6s ease;
     }
 
-    .success.show {
+    .final-message.show {
       opacity: 1;
     }
 
@@ -178,7 +188,6 @@
 
       .portrait {
         width: 150px;
-        margin-bottom: 25px;
       }
 
       h1 {
@@ -192,7 +201,6 @@
       .mailing-inline form {
         flex-direction: column;
         align-items: flex-start;
-        gap: 6px;
       }
 
       .mailing-inline input {
@@ -219,9 +227,7 @@
 
       <h1>Manuel Jiménez</h1>
 
-      <p>
-        Fotógrafo de vida silvestre en México.
-      </p>
+      <p>Fotógrafo de vida silvestre en México.</p>
 
       <p>
         Observo y documento la vida que ocurre a nuestro alrededor,
@@ -237,21 +243,21 @@
         Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
       </div>
 
-      <!-- MAILING INLINE -->
+      <!-- MAILING -->
       <div class="mailing-inline">
 
         <form id="form">
-          <span class="label">Fotografías, de vez en cuando -></span>
+          <span class="label" id="label">Fotografías, de vez en cuando.</span>
 
-          <input type="email" name="email" placeholder="tu correo" required>
+          <input id="email" type="email" name="email" placeholder="tu correo" required>
           <input type="text" name="_gotcha" style="display:none">
 
-          <button type="submit">Suscribirme</button>
+          <button id="btn" type="submit">Suscribirme</button>
         </form>
 
-        <div id="success" class="success">
-          Gracias. Te escribiré pronto.
-        </div>
+        <span id="finalMessage" class="final-message">
+          Gracias. Te escribiré cuando haya algo que valga la pena.
+        </span>
 
       </div>
 
@@ -260,7 +266,10 @@
 
   <script>
     const form = document.getElementById("form");
-    const success = document.getElementById("success");
+    const email = document.getElementById("email");
+    const btn = document.getElementById("btn");
+    const label = document.getElementById("label");
+    const finalMessage = document.getElementById("finalMessage");
 
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
@@ -270,14 +279,21 @@
       const response = await fetch("https://formspree.io/f/xvzvwqqd", {
         method: "POST",
         body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
 
       if (response.ok) {
-        form.reset();
-        success.classList.add("show");
+        // fade out elementos
+        email.classList.add("fade-out");
+        btn.classList.add("fade-out");
+        label.classList.add("fade-out");
+
+        // esperar animación
+        setTimeout(() => {
+          form.style.display = "none";
+          finalMessage.classList.add("show");
+        }, 400);
+
       } else {
         alert("Error al enviar. Intenta de nuevo.");
       }
