@@ -83,7 +83,7 @@
       transform: scaleX(-1);
     }
 
-    @keyfram fadeIn {
+    @keyframes fadeIn {
       to {
         opacity: 1;
         transform: translateY(0);
@@ -114,7 +114,7 @@
       text-decoration: none;
     }
 
-    /* MAILING INLINE (UNA LÍNEA) */
+    /* MAILING INLINE */
     .mailing-inline {
       margin-top: 50px;
     }
@@ -138,7 +138,7 @@
     }
 
     .input-stack input,
-    .input-stack .final-msage {
+    .input-stack .final-message {
       position: absolute;
       top: 0;
       left: 0;
@@ -166,18 +166,18 @@
     .input-stack input.fade-out {
       opacity: 0;
       transform: translateY(5px);
+      transition: 0.3s;
     }
 
-    .final-msage {
+    .final-message {
       font-size: 13px;
       color: #aaa;
       opacity: 0;
       transform: translateY(5px);
-      pointer-events: none;
       transition: 0.5s;
     }
 
-    .final-msage.show {
+    .final-message.show {
       opacity: 1;
       transform: translateY(0);
     }
@@ -230,10 +230,10 @@
 <body>
 
   <header>
-    <a href="index.html" data-="← Volver" data-en="← Back">← Volver</a>
+    <a href="index.html">← Volver</a>
 
     <div class="lang-toggle">
-      <span onclick="setLang('es')">ES</span> 
+      <span onclick="setLang('es')">ES</span> /
       <span onclick="setLang('en')">EN</span>
     </div>
   </header>
@@ -245,46 +245,39 @@
         <img src="photos/hshot.jpg" class="flip" alt="Manuel Jiménez">
       </div>
 
-      <h1 data-es="Manuel Jiménez" data-en="Manuel Jiménez"></h1>
+      <h1>Manuel Jiménez</h1>
 
-      <p data-es="Fotógrafo de vida silvestre en México."
-         data-en="Wildlife photographer based in Mexico."></p>
+      <p>Fotógrafo de vida silvestre en México.</p>
 
-      <p data-es="Observo y documento la vida que ocurre a nuestro alrededor."
-         data-en="I observe and document the life that unfolds around us."></p>
+      <p>
+        Observo y documento la vida que ocurre a nuestro alrededor.
+      </p>
 
-      <p data-es="La naturaleza no está lejos. Sigue aquí."
-         data-en="Nature is not far away. It is still here."></p>
+      <p>
+        La naturaleza no está lejos.
+        <br>Sigue aquí.
+      </p>
 
       <div class="contact">
-        <span data-es="Contacto:" data-en="Contact:"></span>
-        <a href="mailto:m@manueljg.com">m@manueljg.com</a>
+        Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
       </div>
 
       <div class="mailing-inline">
         <form id="form">
 
-          <span class="label"
-            data-es="Fotografías, de vez en cuando →"
-            data-en="Photographs, from time to time →"></span>
+          <span class="label">Fotografías, de vez en cuando →</span>
 
           <div class="input-stack">
-            <input id="email" type="email" name="email"
-              data-es="tu correo"
-              data-en="your email"
-              placeholder="tu correo"
-              required>
+            <input id="email" type="email" name="email" placeholder="tu correo" required>
 
-            <span id="finalMessage" class="final-message"
-              data-es="Gracias. Te escribiré."
-              data-en="Thank you. I’ll be in touch."></span>
+            <span id="finalMessage" class="final-message">
+              Gracias. Te escribiré.
+            </span>
           </div>
 
           <input type="text" name="_gotcha" style="display:none">
 
-          <button id="btn" type="submit"
-            data-es="OK"
-            data-en="OK"></button>
+          <button id="btn" type="submit">Enviar</button>
 
         </form>
       </div>
@@ -319,34 +312,6 @@
         }, 300);
       }
     });
-
-    function setLang(lang) {
-      localStorage.setItem("lang", lang);
-      updateLang();
-    }
-
-    function updateLang() {
-      const lang = localStorage.getItem("lang") || "es";
-      const elements = document.querySelectorAll("[data-es]");
-      const toggles = document.querySelectorAll(".lang-toggle span");
-
-      elements.forEach(el => {
-        if (el.tagName === "INPUT") {
-          el.placeholder = el.getAttribute(`data-${lang}`);
-        } else {
-          el.textContent = el.getAttribute(`data-${lang}`);
-        }
-      });
-
-      toggles.forEach(el => {
-        el.classList.remove("active");
-        if (el.textContent.toLowerCase() === lang) {
-          el.classList.add("active");
-        }
-      });
-    }
-
-    updateLang();
   </script>
 
 </body>
