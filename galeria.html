@@ -19,6 +19,7 @@
 
     header {
       padding: 30px 40px;
+      position: relative;
     }
 
     header a {
@@ -28,6 +29,29 @@
     }
 
     header a:hover {
+      color: white;
+    }
+
+    /* TOGGLE */
+    .lang-toggle {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 12px;
+    }
+
+    .lang-toggle span {
+      margin-left: 10px;
+      cursor: pointer;
+      color: #aaa;
+      transition: 0.3s;
+    }
+
+    .lang-toggle span:hover {
+      color: white;
+    }
+
+    .lang-toggle .active {
       color: white;
     }
 
@@ -130,10 +154,15 @@
 <body>
 
   <header>
-    <a href="index.html">← Volver</a>
+    <a href="index.html" data-es="← Volver" data-en="← Back">← Volver</a>
+
+    <div class="lang-toggle">
+      <span onclick="setLang('es')">ES</span> /
+      <span onclick="setLang('en')">EN</span>
+    </div>
   </header>
 
-  <h1>Galería</h1>
+  <h1 data-es="Galería" data-en="Gallery">Galería</h1>
 
   <div class="gallery">
     <div class="gallery-item"><img src="ospreyMJG-mobile.jpg"></div>
@@ -191,14 +220,12 @@
     document.querySelector('.next').onclick = nextImage;
     document.querySelector('.prev').onclick = prevImage;
 
-    // cerrar
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         lightbox.classList.remove('active');
       }
     });
 
-    // teclado
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
 
@@ -207,7 +234,6 @@
       if (e.key === 'Escape') lightbox.classList.remove('active');
     });
 
-    // swipe mobile
     let startX = 0;
 
     lightbox.addEventListener('touchstart', e => {
@@ -220,6 +246,31 @@
       if (endX - startX > 50) prevImage();
       if (startX - endX > 50) nextImage();
     });
+
+    /* LANG */
+    function setLang(lang) {
+      localStorage.setItem("lang", lang);
+      updateLang();
+    }
+
+    function updateLang() {
+      const lang = localStorage.getItem("lang") || "es";
+      const elements = document.querySelectorAll("[data-es]");
+      const toggles = document.querySelectorAll(".lang-toggle span");
+
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+
+      toggles.forEach(el => {
+        el.classList.remove("active");
+        if (el.textContent.toLowerCase() === lang) {
+          el.classList.add("active");
+        }
+      });
+    }
+
+    updateLang();
   </script>
 
 </body>
