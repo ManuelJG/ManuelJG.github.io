@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Manuel Jimenez | Fotografía de naturaleza</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* IMAGEN */
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(20px);
+      transform: scale(1.08);
+      transition: filter 1.2s ease;
+    }
+
+    .hero img.loaded {
+      filter: blur(0);
+      transform: scale(1.04) translateX(-2%);
+      transition: 
+        filter 1.2s ease,
+        transform 12s ease;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.08);
+    }
+
+    /* TOGGLE */
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #888;
+      z-index: 10;
+    }
+
+    .lang-toggle span {
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .lang-toggle span:hover {
+      color: white;
+    }
+
+    /* TEXTO */
+    .hero-text {
+      position: absolute;
+      bottom: 70px;
+      left: 50px;
+      max-width: 420px;
+
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeText 1s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeText {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-text h2 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #bbbbbb;
+    }
+
+    .hero-text h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    .links {
+      margin-top: 18px;
+      font-size: 13px;
+    }
+
+    .links a {
+      color: #cccccc;
+      text-decoration: none;
+      margin-right: 14px;
+      transition: 0.3s;
+    }
+
+    .links a:hover {
+      color: white;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .hero-text {
+        left: 25px;
+        bottom: 12%;
+      }
+
+      .hero-text h1 {
+        font-size: 20px;
+      }
+
+      .hero-text h2 {
+        font-size: 11px;
+      }
+
+      .hero-text p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+
+    <!-- TOGGLE -->
+    <div class="lang-toggle">
+      <span onclick="setLang('es')">ES</span>
+      <span onclick="setLang('en')">EN</span>
+    </div>
+
+    <picture>
+      <source srcset="ospreyMJG-mobile.jpg" media="(max-width: 600px)">
+      <img id="hero-img" src="ospreyMJG.jpg" alt="Fotografía">
+    </picture>
+
+    <div class="overlay"></div>
+
+    <div class="hero-text">
+      <h2 data-es="Manuel Jiménez" data-en="Manuel Jiménez">
+        Manuel Jiménez
+      </h2>
+
+      <h1 data-es="Fotografía de naturaleza" data-en="Nature Photography">
+        Fotografía de naturaleza
+      </h1>
+
+      <p data-es="Impresiones disponibles · Contacto: m@manueljg.com"
+         data-en="Prints available · Contact: m@manueljg.com">
+        Impresiones disponibles · Contacto: m@manueljg.com
+      </p>
+
+      <div class="links">
+        <a href="https://instagram.com/manueljigas" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
+        <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
+        <a href="galeria.html" data-es="Galería" data-en="Gallery">Galería</a>
+        <a href="about.html" data-es="Acerca" data-en="About">Acerca</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // imagen
+    const img = document.getElementById('hero-img');
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.onload = () => img.classList.add('loaded');
+    }
+
+    // idioma
+    function setLang(lang) {
+      localStorage.setItem("lang", lang);
+      updateLang();
+    }
+
+    function updateLang() {
+      const lang = localStorage.getItem("lang") || "es";
+      const elements = document.querySelectorAll("[data-es]");
+
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+    }
+
+    // init
+    updateLang();
+  </script>
+
+</body>
+</html>
