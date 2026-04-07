@@ -29,14 +29,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-
-      /* estado inicial */
       filter: blur(20px);
       transform: scale(1.08);
       transition: filter 1.2s ease;
     }
 
-    /* estado final (Ken Burns + pan) */
     .hero img.loaded {
       filter: blur(0);
       transform: scale(1.04) translateX(-2%);
@@ -45,11 +42,31 @@
         transform 12s ease;
     }
 
-    /* overlay */
     .overlay {
       position: absolute;
       inset: 0;
       background: rgba(0,0,0,0.08);
+    }
+
+    /* TOGGLE */
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #aaa;
+      z-index: 10;
+    }
+
+    .lang-toggle span {
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .lang-toggle span:hover {
+      color: white;
     }
 
     /* TEXTO */
@@ -137,6 +154,12 @@
 
   <div class="hero">
 
+    <!-- TOGGLE -->
+    <div class="lang-toggle">
+      <span onclick="setLang('es')">ES</span>
+      <span onclick="setLang('en')">EN</span>
+    </div>
+
     <picture>
       <source srcset="ospreyMJG-mobile.jpg" media="(max-width: 600px)">
       <img id="hero-img" src="ospreyMJG.jpg" alt="Fotografía">
@@ -145,31 +168,56 @@
     <div class="overlay"></div>
 
     <div class="hero-text">
-      <h2>Manuel Jiménez</h2>
-      <h1>Fotografía de naturaleza</h1>
-      <p>Impresiones disponibles · Contacto: m@manueljg.com</p>
+      <h2 data-es="Manuel Jiménez" data-en="Manuel Jiménez">
+        Manuel Jiménez
+      </h2>
+
+      <h1 data-es="Fotografía de naturaleza" data-en="Nature Photography">
+        Fotografía de naturaleza
+      </h1>
+
+      <p data-es="Impresiones disponibles · Contacto: m@manueljg.com"
+         data-en="Prints available · Contact: m@manueljg.com">
+        Impresiones disponibles · Contacto: m@manueljg.com
+      </p>
 
       <div class="links">
         <a href="https://instagram.com/manueljigas" target="_blank">Instagram</a>
         <a href="https://www.facebook.com/manuel.jgas/" target="_blank">Facebook</a>
         <a href="https://youtube.com/@ManuelJG" target="_blank">YouTube</a>
-        <a href="galeria.html">Galería</a>
-        <a href="about.html">Acerca</a>
+        <a href="galeria.html" data-es="Galería" data-en="Gallery">Galería</a>
+        <a href="about.html" data-es="Acerca" data-en="About">Acerca</a>
       </div>
     </div>
 
   </div>
 
   <script>
+    // imagen
     const img = document.getElementById('hero-img');
-
     if (img.complete) {
       img.classList.add('loaded');
     } else {
-      img.onload = () => {
-        img.classList.add('loaded');
-      };
+      img.onload = () => img.classList.add('loaded');
     }
+
+    // idioma
+    function setLang(lang) {
+      localStorage.setItem("lang", lang);
+      updateLang();
+    }
+
+    function updateLang() {
+      const lang = localStorage.getItem("lang") || "es";
+      const elements = document.querySelectorAll("[data-es]");
+
+      elements.forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+    }
+
+    // init
+    updateLang();
   </script>
 
 </body>
