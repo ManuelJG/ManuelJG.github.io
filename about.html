@@ -7,6 +7,7 @@
 
   <link rel="icon" type="image/png" href="favicon.png">
 
+  <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
@@ -36,6 +37,7 @@
       color: white;
     }
 
+    /* TOGGLE */
     .lang-toggle {
       position: absolute;
       top: 30px;
@@ -47,6 +49,10 @@
       margin-left: 10px;
       cursor: pointer;
       color: #aaa;
+    }
+
+    .lang-toggle span:hover {
+      color: white;
     }
 
     .lang-toggle .active {
@@ -65,6 +71,7 @@
       max-width: 600px;
     }
 
+    /* FOTO */
     .portrait {
       width: 200px;
       margin-bottom: 30px;
@@ -92,6 +99,7 @@
 
     h1 {
       font-family: 'Playfair Display', serif;
+      font-weight: 400;
       font-size: 32px;
       margin-bottom: 30px;
     }
@@ -114,6 +122,10 @@
       text-decoration: none;
     }
 
+    .contact a:hover {
+      color: white;
+    }
+
     /* MAILING INLINE */
     .mailing-inline {
       margin-top: 50px;
@@ -132,20 +144,7 @@
       white-space: nowrap;
     }
 
-    .input-stack {
-      position: relative;
-      width: 140px;
-    }
-
-    .input-stack input,
-    .input-stack .final-message {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-    }
-
-    .input-stack input {
+    .email-input {
       background: none;
       border: none;
       border-bottom: 1px solid #444;
@@ -153,33 +152,21 @@
       padding: 4px 2px;
       font-size: 13px;
       outline: none;
+      width: 140px;
     }
 
-    .input-stack input:focus {
+    .email-input:focus {
       border-bottom: 1px solid #aaa;
     }
 
-    .input-stack input::placeholder {
+    .email-input::placeholder {
       color: #666;
     }
 
-    .input-stack input.fade-out {
+    .fade-out {
       opacity: 0;
       transform: translateY(5px);
       transition: 0.3s;
-    }
-
-    .final-message {
-      font-size: 13px;
-      color: #aaa;
-      opacity: 0;
-      transform: translateY(5px);
-      transition: 0.5s;
-    }
-
-    .final-message.show {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .mailing-inline button {
@@ -191,15 +178,21 @@
       transition: 0.3s;
     }
 
-    .mailing-inline button.fade-out {
-      opacity: 0;
-      transform: translateY(5px);
-    }
-
     .mailing-inline button:hover {
       color: white;
     }
 
+    .final-message {
+      font-size: 13px;
+      color: #aaa;
+      display: none;
+    }
+
+    .final-message.show {
+      display: inline;
+    }
+
+    /* MOBILE */
     @media (max-width: 600px) {
       .container {
         padding: 20px;
@@ -214,14 +207,18 @@
         font-size: 24px;
       }
 
+      p {
+        font-size: 14px;
+      }
+
       .mailing-inline form {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .input-stack {
+      .email-input {
         width: 100%;
-        max-width: 200px;
+        max-width: 220px;
       }
     }
   </style>
@@ -241,43 +238,63 @@
   <div class="container">
     <div class="content">
 
+      <!-- FOTO -->
       <div class="portrait">
         <img src="photos/hshot.jpg" class="flip" alt="Manuel Jiménez">
       </div>
 
-      <h1>Manuel Jiménez</h1>
+      <h1 data-es="Manuel Jiménez" data-en="Manuel Jiménez">Manuel Jiménez</h1>
 
-      <p>Fotógrafo de vida silvestre en México.</p>
+      <p data-es="Fotógrafo de vida silvestre en México."
+         data-en="Wildlife photographer based in Mexico.">
+        Fotógrafo de vida silvestre en México.
+      </p>
 
-      <p>
+      <p data-es="Observo y documento la vida que ocurre a nuestro alrededor."
+         data-en="I observe and document the life that unfolds around us.">
         Observo y documento la vida que ocurre a nuestro alrededor.
       </p>
 
-      <p>
+      <p data-es="La naturaleza no está lejos. Sigue aquí."
+         data-en="Nature is not far away. It is still here.">
         La naturaleza no está lejos.
         <br>Sigue aquí.
       </p>
 
       <div class="contact">
-        Contacto: <a href="mailto:m@manueljg.com">m@manueljg.com</a>
+        <span data-es="Contacto:" data-en="Contact:">Contacto:</span>
+        <a href="mailto:m@manueljg.com">m@manueljg.com</a>
       </div>
 
+      <!-- MAILING -->
       <div class="mailing-inline">
         <form id="form">
 
-          <span class="label">Fotografías, de vez en cuando →</span>
+          <span class="label"
+            data-es="Fotografías, de vez en cuando →"
+            data-en="Photographs, from time to time →">
+            Fotografías, de vez en cuando →
+          </span>
 
-          <div class="input-stack">
-            <input id="email" type="email" name="email" placeholder="tu correo" required>
-
-            <span id="finalMessage" class="final-message">
-              Gracias. Te escribiré.
-            </span>
-          </div>
+          <input id="email" class="email-input" type="email" name="email"
+            data-es="tu correo"
+            data-en="your email"
+            placeholder="tu correo"
+            required>
 
           <input type="text" name="_gotcha" style="display:none">
 
-          <button id="btn" type="submit">Enviar</button>
+          <button id="btn" type="submit"
+            data-es="Enviar"
+            data-en="Send">
+            Enviar
+          </button>
+
+          <span id="finalMessage" class="final-message"
+            data-es="Gracias. Te escribiré."
+            data-en="Thank you. I’ll be in touch.">
+            Gracias. Te escribiré.
+          </span>
 
         </form>
       </div>
@@ -307,11 +324,42 @@
         btn.classList.add("fade-out");
 
         setTimeout(() => {
+          email.style.display = "none";
           btn.style.display = "none";
           finalMessage.classList.add("show");
         }, 300);
+      } else {
+        alert("Error al enviar.");
       }
     });
+
+    function setLang(lang) {
+      localStorage.setItem("lang", lang);
+      updateLang();
+    }
+
+    function updateLang() {
+      const lang = localStorage.getItem("lang") || "es";
+      const elements = document.querySelectorAll("[data-es]");
+      const toggles = document.querySelectorAll(".lang-toggle span");
+
+      elements.forEach(el => {
+        if (el.tagName === "INPUT") {
+          el.placeholder = el.getAttribute(`data-${lang}`);
+        } else {
+          el.textContent = el.getAttribute(`data-${lang}`);
+        }
+      });
+
+      toggles.forEach(el => {
+        el.classList.remove("active");
+        if (el.textContent.toLowerCase() === lang) {
+          el.classList.add("active");
+        }
+      });
+    }
+
+    updateLang();
   </script>
 
 </body>
