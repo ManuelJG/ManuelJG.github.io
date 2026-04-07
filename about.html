@@ -83,7 +83,7 @@
       transform: scaleX(-1);
     }
 
-    @keyframes fadeIn {
+    @keyfram fadeIn {
       to {
         opacity: 1;
         transform: translateY(0);
@@ -114,7 +114,7 @@
       text-decoration: none;
     }
 
-    /* MAILING */
+    /* MAILING INLINE (UNA LÍNEA) */
     .mailing-inline {
       margin-top: 50px;
     }
@@ -122,23 +122,23 @@
     .mailing-inline form {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .label {
       font-size: 13px;
       color: #aaa;
+      white-space: nowrap;
     }
 
-    /* CONTENEDOR STACK */
     .input-stack {
       position: relative;
-      width: 160px;
+      width: 140px;
     }
 
     .input-stack input,
-    .input-stack .final-message {
+    .input-stack .final-msage {
       position: absolute;
       top: 0;
       left: 0;
@@ -168,7 +168,7 @@
       transform: translateY(5px);
     }
 
-    .final-message {
+    .final-msage {
       font-size: 13px;
       color: #aaa;
       opacity: 0;
@@ -177,7 +177,7 @@
       transition: 0.5s;
     }
 
-    .final-message.show {
+    .final-msage.show {
       opacity: 1;
       transform: translateY(0);
     }
@@ -221,7 +221,7 @@
 
       .input-stack {
         width: 100%;
-        max-width: 220px;
+        max-width: 200px;
       }
     }
   </style>
@@ -230,10 +230,10 @@
 <body>
 
   <header>
-    <a href="index.html" data-es="← Volver" data-en="← Back">← Volver</a>
+    <a href="index.html" data-="← Volver" data-en="← Back">← Volver</a>
 
     <div class="lang-toggle">
-      <span onclick="setLang('es')">ES</span> /
+      <span onclick="setLang('es')">ES</span> 
       <span onclick="setLang('en')">EN</span>
     </div>
   </header>
@@ -245,7 +245,7 @@
         <img src="photos/hshot.jpg" class="flip" alt="Manuel Jiménez">
       </div>
 
-      <h1 data-es="Manuel Jiménez" data-en="Manuel Jiménez">Manuel Jiménez</h1>
+      <h1 data-es="Manuel Jiménez" data-en="Manuel Jiménez"></h1>
 
       <p data-es="Fotógrafo de vida silvestre en México."
          data-en="Wildlife photographer based in Mexico."></p>
@@ -265,8 +265,8 @@
         <form id="form">
 
           <span class="label"
-            data-es="Fotografías, de vez en cuando."
-            data-en="Photographs, from time to time."></span>
+            data-es="Fotografías, de vez en cuando →"
+            data-en="Photographs, from time to time →"></span>
 
           <div class="input-stack">
             <input id="email" type="email" name="email"
@@ -276,15 +276,15 @@
               required>
 
             <span id="finalMessage" class="final-message"
-              data-es="Gracias. Te escribiré cuando haya algo que valga la pena."
-              data-en="Thank you. I will write when there is something worth sharing."></span>
+              data-es="Gracias. Te escribiré."
+              data-en="Thank you. I’ll be in touch."></span>
           </div>
 
           <input type="text" name="_gotcha" style="display:none">
 
           <button id="btn" type="submit"
-            data-es="Suscribirme"
-            data-en="Subscribe"></button>
+            data-es="OK"
+            data-en="OK"></button>
 
         </form>
       </div>
@@ -314,6 +314,7 @@
         btn.classList.add("fade-out");
 
         setTimeout(() => {
+          btn.style.display = "none";
           finalMessage.classList.add("show");
         }, 300);
       }
