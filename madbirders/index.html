@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Mad Birders — Calendario</title>
+  <title>MADBirders — Calendario</title>
 
 
   <style>
@@ -80,28 +80,57 @@
     }
 
 
-    h1 {
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+    }
+
+
+    .logo {
+
+      width: 48px;
+      height: 48px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      display: block;
+
+      border: 1px solid #333;
+
+    }
+
+
+    .brand-text h1 {
 
       margin: 0;
 
       color: #f5f5f5;
 
-      font-size: 32px;
+      font-size: 30px;
 
       font-weight: 600;
 
       letter-spacing: -0.5px;
+
+      line-height: 1.1;
 
     }
 
 
     .subtitle {
 
-      margin-top: 6px;
+      margin-top: 5px;
 
       color: #999;
 
-      font-size: 16px;
+      font-size: 15px;
 
     }
 
@@ -402,9 +431,24 @@
       }
 
 
-      h1 {
+      .brand {
 
-        font-size: 26px;
+        gap: 10px;
+
+      }
+
+
+      .logo {
+
+        width: 40px;
+        height: 40px;
+
+      }
+
+
+      .brand-text h1 {
+
+        font-size: 25px;
 
       }
 
@@ -506,10 +550,27 @@
 
     <header>
 
-      <h1>Mad Birders</h1>
+      <div class="brand">
 
-      <div class="subtitle">
-        Calendario de salidas
+
+        <img
+          src="mad.PNG"
+          alt="MADBirders"
+          class="logo"
+        >
+
+
+        <div class="brand-text">
+
+          <h1>MADBirders</h1>
+
+          <div class="subtitle">
+            Calendario de salidas
+          </div>
+
+        </div>
+
+
       </div>
 
     </header>
@@ -830,7 +891,7 @@ function parseICSDate(value) {
 
 
   /*
-   * Día completo
+   * Evento de día completo
    *
    * 20260918
    */
