@@ -798,17 +798,11 @@
       <div class="weekdays">
 
         <div class="weekday">LUN</div>
-
         <div class="weekday">MAR</div>
-
         <div class="weekday">MIÉ</div>
-
         <div class="weekday">JUE</div>
-
         <div class="weekday">VIE</div>
-
         <div class="weekday">SÁB</div>
-
         <div class="weekday">DOM</div>
 
       </div>
@@ -923,7 +917,9 @@ async function loadCalendar() {
 
 
     events =
-      parseICS(result.data);
+      parseICS(
+        result.data
+      );
 
 
     console.log(
@@ -1040,7 +1036,9 @@ function parseICS(data) {
 
 
         const match =
-          block.match(regex);
+          block.match(
+            regex
+          );
 
 
         return match
@@ -1051,23 +1049,33 @@ function parseICS(data) {
 
 
       const dtstart =
-        getValue("DTSTART");
+        getValue(
+          "DTSTART"
+        );
 
 
       const dtend =
-        getValue("DTEND");
+        getValue(
+          "DTEND"
+        );
 
 
       const summary =
-        getValue("SUMMARY");
+        getValue(
+          "SUMMARY"
+        );
 
 
       const location =
-        getValue("LOCATION");
+        getValue(
+          "LOCATION"
+        );
 
 
       const description =
-        getValue("DESCRIPTION");
+        getValue(
+          "DESCRIPTION"
+        );
 
 
       if (
@@ -1080,12 +1088,34 @@ function parseICS(data) {
       }
 
 
+      /*
+       * IMPORTANTE
+       *
+       * DTSTART de 8 caracteres:
+       *
+       * 20260918
+       *
+       * significa evento de
+       * día completo.
+       *
+       * Si tiene:
+       *
+       * 20260918T183000
+       *
+       * tiene hora.
+       */
+
+      const allDay =
+        dtstart.length === 8;
+
+
       parsedEvents.push({
 
         date:
           parseICSDate(
             dtstart
           ),
+
 
         end:
           dtend
@@ -1094,15 +1124,22 @@ function parseICS(data) {
               )
             : null,
 
+
+        allDay:
+          allDay,
+
+
         title:
           cleanICS(
             summary
           ),
 
+
         location:
           cleanICS(
             location
           ),
+
 
         description:
           cleanICS(
@@ -1277,9 +1314,13 @@ function cleanICS(value) {
    GET CONTACT FROM NOTES
    ========================================== */
 
-function getContact(description) {
+function getContact(
+  description
+) {
 
-  if (!description) {
+  if (
+    !description
+  ) {
 
     return "";
 
@@ -1311,15 +1352,15 @@ function eventOccursOnDay(
 
 
   /*
-   * Evento con DTEND.
+   * Todos los eventos se manejan
+   * como intervalos:
    *
-   * DTEND es exclusivo.
+   * START incluido
+   * END excluido
    *
-   * 18 → 21
-   *
-   * significa:
-   *
-   * 18, 19 y 20
+   * Esto funciona tanto para
+   * eventos con hora como para
+   * eventos de día completo.
    */
 
   if (event.end) {
@@ -1334,10 +1375,6 @@ function eventOccursOnDay(
 
   }
 
-
-  /*
-   * Evento de un solo día
-   */
 
   return (
 
@@ -1402,7 +1439,8 @@ function renderCalendar() {
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   /*
@@ -1418,11 +1456,9 @@ function renderCalendar() {
 
 
   /*
-   * Convertir:
-   *
    * Domingo = 0
    *
-   * a:
+   * Convertimos a:
    *
    * Lunes = 0
    */
@@ -1616,12 +1652,21 @@ function renderCalendar() {
 
 
         /*
-         * Hora
+         * Mostrar hora solamente
+         * cuando realmente existe.
          */
 
         const hasTime =
-          event.date.getHours() !== 0 ||
-          event.date.getMinutes() !== 0;
+
+          !event.allDay &&
+
+          (
+
+            event.date.getHours() !== 0 ||
+
+            event.date.getMinutes() !== 0
+
+          );
 
 
         if (hasTime) {
@@ -1728,7 +1773,9 @@ function renderCalendar() {
    FORMAT UPCOMING DATE
    ========================================== */
 
-function formatUpcomingDate(event) {
+function formatUpcomingDate(
+  event
+) {
 
 
   const start =
@@ -1736,49 +1783,51 @@ function formatUpcomingDate(event) {
 
 
   /*
-   * Si no tiene fecha final,
-   * solamente mostramos el inicio.
+   * No hay fecha final
    */
 
   if (!event.end) {
 
-    return start
-      .toLocaleDateString(
-        "es-MX",
-        {
-          day: "numeric",
-          month: "short"
-        }
-      )
-      .replace(
-        ".",
-        ""
-      );
+    return formatDate(
+      start
+    );
 
   }
 
 
   /*
+   * EVENTO DE DÍA COMPLETO
+   *
    * DTEND es exclusivo.
    *
    * Ejemplo:
    *
-   * 18 → 21
+   * DTSTART: 20260918
+   * DTEND:   20260921
    *
    * significa:
    *
    * 18, 19 y 20
+   *
+   * Por eso aquí sí
+   * restamos un día.
    */
 
-  const end =
+  let end =
     new Date(
       event.end.getTime()
     );
 
 
-  end.setDate(
-    end.getDate() - 1
-  );
+  if (
+    event.allDay
+  ) {
+
+    end.setDate(
+      end.getDate() - 1
+    );
+
+  }
 
 
   /*
@@ -1802,59 +1851,50 @@ function formatUpcomingDate(event) {
 
   ) {
 
-    return start
-      .toLocaleDateString(
-        "es-MX",
-        {
-          day: "numeric",
-          month: "short"
-        }
-      )
-      .replace(
-        ".",
-        ""
-      );
+    return formatDate(
+      start
+    );
 
   }
 
 
   /*
-   * Diferentes días
+   * Varios días
    */
 
-  const startText =
-    start.toLocaleDateString(
-      "es-MX",
-      {
-        day: "numeric",
-        month: "short"
-      }
-    )
-    .replace(
-      ".",
-      ""
-    );
-
-
-  const endText =
-    end.toLocaleDateString(
-      "es-MX",
-      {
-        day: "numeric",
-        month: "short"
-      }
-    )
-    .replace(
-      ".",
-      ""
-    );
-
-
   return (
-    startText +
+
+    formatDate(start) +
+
     " – " +
-    endText
+
+    formatDate(end)
+
   );
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+   ========================================== */
+
+function formatDate(
+  date
+) {
+
+  return date
+    .toLocaleDateString(
+      "es-MX",
+      {
+        day: "numeric",
+        month: "short"
+      }
+    )
+    .replace(
+      ".",
+      ""
+    );
 
 }
 
@@ -1883,9 +1923,6 @@ function renderUpcoming() {
   /*
    * Obtener eventos que todavía
    * no han terminado.
-   *
-   * Un evento de varios días
-   * cuenta como UNA salida.
    */
 
   const upcomingEvents =
@@ -1894,16 +1931,40 @@ function renderUpcoming() {
       .filter(
         event => {
 
-          if (event.end) {
 
-            return event.end > now;
+          /*
+           * Si tiene END,
+           * usamos END para saber
+           * si todavía está activo.
+           */
+
+          if (
+            event.end
+          ) {
+
+            return (
+              event.end > now
+            );
 
           }
 
-          return event.date >= now;
+
+          /*
+           * Sin END:
+           * usamos START.
+           */
+
+          return (
+            event.date >= now
+          );
 
         }
       )
+
+
+      /*
+       * Orden cronológico
+       */
 
       .sort(
         (a, b) =>
@@ -1912,8 +1973,9 @@ function renderUpcoming() {
 
       )
 
+
       /*
-       * Solo las primeras 3
+       * Solo las siguientes 3
        */
 
       .slice(
@@ -1934,9 +1996,9 @@ function renderUpcoming() {
 
       '<div class="no-upcoming">' +
 
-      'No hay próximas salidas programadas.'
+      'No hay próximas salidas programadas.' +
 
-      + '</div>';
+      '</div>';
 
     return;
 
@@ -1944,11 +2006,16 @@ function renderUpcoming() {
 
 
   /*
-   * Crear tarjetas
+   * Limpiar
    */
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
+
+  /*
+   * Crear tarjetas
+   */
 
   upcomingEvents.forEach(
     event => {
@@ -2022,7 +2089,9 @@ function renderUpcoming() {
         );
 
 
-      if (contact) {
+      if (
+        contact
+      ) {
 
 
         const contactElement =
@@ -2051,11 +2120,21 @@ function renderUpcoming() {
        */
 
       const hasTime =
-        event.date.getHours() !== 0 ||
-        event.date.getMinutes() !== 0;
+
+        !event.allDay &&
+
+        (
+
+          event.date.getHours() !== 0 ||
+
+          event.date.getMinutes() !== 0
+
+        );
 
 
-      if (hasTime) {
+      if (
+        hasTime
+      ) {
 
 
         const timeElement =
@@ -2145,6 +2224,7 @@ document
         currentDate.getMonth() - 1
       );
 
+
       renderCalendar();
 
     }
@@ -2167,6 +2247,7 @@ document
         currentDate.getMonth() + 1
       );
 
+
       renderCalendar();
 
     }
@@ -2178,6 +2259,7 @@ document
    ========================================== */
 
 loadCalendar();
+
 
 </script>
 
