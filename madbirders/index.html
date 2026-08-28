@@ -380,6 +380,145 @@
 
 
     /* ========================================
+       UPCOMING EVENTS
+       ======================================== */
+
+    .upcoming {
+
+      margin-top: 35px;
+
+    }
+
+
+    .upcoming-title {
+
+      margin: 0 0 16px 0;
+
+      color: #f5f5f5;
+
+      font-size: 20px;
+
+      font-weight: 600;
+
+    }
+
+
+    .upcoming-list {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 14px;
+
+    }
+
+
+    .upcoming-card {
+
+      min-height: 135px;
+
+      padding: 18px;
+
+      background: #1b1b1b;
+
+      border: 1px solid #333;
+
+      border-radius: 10px;
+
+      transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+
+    }
+
+
+    .upcoming-card:hover {
+
+      background: #202020;
+
+      border-color: #444;
+
+    }
+
+
+    .upcoming-date {
+
+      margin-bottom: 10px;
+
+      color: #888;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.5px;
+
+    }
+
+
+    .upcoming-event-title {
+
+      margin-bottom: 7px;
+
+      color: #f5f5f5;
+
+      font-size: 17px;
+
+      font-weight: 600;
+
+      line-height: 1.25;
+
+    }
+
+
+    .upcoming-time {
+
+      margin-bottom: 4px;
+
+      color: #aaa;
+
+      font-size: 12px;
+
+    }
+
+
+    .upcoming-location {
+
+      color: #777;
+
+      font-size: 12px;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+    }
+
+
+    .no-upcoming {
+
+      padding: 25px;
+
+      background: #1b1b1b;
+
+      border: 1px solid #333;
+
+      border-radius: 10px;
+
+      color: #888;
+
+      text-align: center;
+
+    }
+
+
+    /* ========================================
        LOADING
        ======================================== */
 
@@ -531,6 +670,47 @@
 
       }
 
+
+      /* UPCOMING MOBILE */
+
+      .upcoming {
+
+        margin-top: 28px;
+
+      }
+
+
+      .upcoming-title {
+
+        font-size: 18px;
+
+      }
+
+
+      .upcoming-list {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+      }
+
+
+      .upcoming-card {
+
+        min-height: auto;
+
+        padding: 15px;
+
+      }
+
+
+      .upcoming-event-title {
+
+        font-size: 16px;
+
+      }
+
     }
 
   </style>
@@ -645,6 +825,33 @@
     </div>
 
 
+    <!-- ====================================
+         UPCOMING EVENTS
+         ==================================== -->
+
+    <section class="upcoming">
+
+
+      <h2 class="upcoming-title">
+        Próximas salidas
+      </h2>
+
+
+      <div
+        id="upcomingList"
+        class="upcoming-list"
+      >
+
+        <div class="loading">
+          Cargando próximas salidas...
+        </div>
+
+      </div>
+
+
+    </section>
+
+
   </div>
 
 
@@ -721,6 +928,8 @@ async function loadCalendar() {
 
     renderCalendar();
 
+    renderUpcoming();
+
 
   } catch (error) {
 
@@ -747,6 +956,19 @@ async function loadCalendar() {
       error.message +
 
       '</small>' +
+
+      '</div>';
+
+
+    document
+      .getElementById(
+        "upcomingList"
+      )
+      .innerHTML =
+
+      '<div class="error">' +
+
+      'No se pudieron cargar las próximas salidas.' +
 
       '</div>';
 
@@ -1457,6 +1679,382 @@ function renderCalendar() {
     );
 
   }
+
+}
+
+
+/* ==========================================
+   FORMAT UPCOMING DATE
+   ========================================== */
+
+function formatUpcomingDate(event) {
+
+
+  const start =
+    event.date;
+
+
+  /*
+   * Si no tiene fecha final,
+   * solamente mostramos el inicio.
+   */
+
+  if (!event.end) {
+
+    return start
+      .toLocaleDateString(
+        "es-MX",
+        {
+          day: "numeric",
+          month: "short"
+        }
+      )
+      .replace(
+        ".",
+        ""
+      );
+
+  }
+
+
+  /*
+   * DTEND es exclusivo.
+   *
+   * Ejemplo:
+   *
+   * 18 → 21
+   *
+   * significa:
+   *
+   * 18, 19 y 20
+   *
+   * Por eso restamos un día
+   * para obtener el último día real.
+   */
+
+  const end =
+    new Date(
+      event.end.getTime()
+    );
+
+
+  end.setDate(
+    end.getDate() - 1
+  );
+
+
+  /*
+   * Mismo día
+   */
+
+  if (
+
+    start.getFullYear() ===
+      end.getFullYear()
+
+    &&
+
+    start.getMonth() ===
+      end.getMonth()
+
+    &&
+
+    start.getDate() ===
+      end.getDate()
+
+  ) {
+
+    return start
+      .toLocaleDateString(
+        "es-MX",
+        {
+          day: "numeric",
+          month: "short"
+        }
+      )
+      .replace(
+        ".",
+        ""
+      );
+
+  }
+
+
+  /*
+   * Diferentes días
+   */
+
+  const startText =
+    start.toLocaleDateString(
+      "es-MX",
+      {
+        day: "numeric",
+        month: "short"
+      }
+    )
+    .replace(
+      ".",
+      ""
+    );
+
+
+  const endText =
+    end.toLocaleDateString(
+      "es-MX",
+      {
+        day: "numeric",
+        month: "short"
+      }
+    )
+    .replace(
+      ".",
+      ""
+    );
+
+
+  return (
+    startText +
+    " – " +
+    endText
+  );
+
+}
+
+
+/* ==========================================
+   RENDER UPCOMING EVENTS
+   ========================================== */
+
+function renderUpcoming() {
+
+
+  const container =
+    document.getElementById(
+      "upcomingList"
+    );
+
+
+  /*
+   * Ahora mismo
+   */
+
+  const now =
+    new Date();
+
+
+  /*
+   * Obtener eventos que todavía
+   * no han terminado.
+   *
+   * Importante:
+   * un evento de varios días
+   * cuenta como UNA salida.
+   */
+
+  const upcomingEvents =
+    events
+
+      .filter(
+        event => {
+
+          if (event.end) {
+
+            return event.end > now;
+
+          }
+
+          return event.date >= now;
+
+        }
+      )
+
+      .sort(
+        (a, b) =>
+
+          a.date - b.date
+
+      )
+
+
+      /*
+       * Solo las primeras 3
+       */
+
+      .slice(
+        0,
+        3
+      );
+
+
+  /*
+   * No hay eventos
+   */
+
+  if (
+    upcomingEvents.length === 0
+  ) {
+
+    container.innerHTML =
+
+      '<div class="no-upcoming">' +
+
+      'No hay próximas salidas programadas.'
+
+      + '</div>';
+
+    return;
+
+  }
+
+
+  /*
+   * Crear tarjetas
+   */
+
+  container.innerHTML = "";
+
+
+  upcomingEvents.forEach(
+    event => {
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "upcoming-card";
+
+
+      /*
+       * Fecha
+       */
+
+      const dateElement =
+        document.createElement(
+          "div"
+        );
+
+
+      dateElement.className =
+        "upcoming-date";
+
+
+      dateElement.textContent =
+        formatUpcomingDate(
+          event
+        );
+
+
+      card.appendChild(
+        dateElement
+      );
+
+
+      /*
+       * Título
+       */
+
+      const titleElement =
+        document.createElement(
+          "div"
+        );
+
+
+      titleElement.className =
+        "upcoming-event-title";
+
+
+      titleElement.textContent =
+        event.title;
+
+
+      card.appendChild(
+        titleElement
+      );
+
+
+      /*
+       * Hora
+       */
+
+      const hasTime =
+        event.date.getHours() !== 0 ||
+        event.date.getMinutes() !== 0;
+
+
+      if (hasTime) {
+
+
+        const timeElement =
+          document.createElement(
+            "div"
+          );
+
+
+        timeElement.className =
+          "upcoming-time";
+
+
+        timeElement.textContent =
+          event.date.toLocaleTimeString(
+            "es-MX",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
+
+
+        card.appendChild(
+          timeElement
+        );
+
+      }
+
+
+      /*
+       * Ubicación
+       */
+
+      if (
+        event.location
+      ) {
+
+
+        const locationElement =
+          document.createElement(
+            "div"
+          );
+
+
+        locationElement.className =
+          "upcoming-location";
+
+
+        locationElement.textContent =
+          event.location;
+
+
+        locationElement.title =
+          event.location;
+
+
+        card.appendChild(
+          locationElement
+        );
+
+      }
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
 
 }
 
