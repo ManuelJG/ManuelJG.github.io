@@ -1060,6 +1060,9 @@ function parseICS(data) {
         getValue("LOCATION");
 
 
+      const description =
+        getValue("DESCRIPTION");
+
       if (
         !dtstart ||
         !summary
@@ -1092,6 +1095,11 @@ function parseICS(data) {
         location:
           cleanICS(
             location
+          ),
+
+        description:
+          cleanICS(
+            description
           )
 
       });
